@@ -31,6 +31,7 @@ function sendFindbackList(player)
 	local guid = player:GetGUIDLow()
 	local result = CharDBQuery("SELECT a.guid,a.itemEntry FROM acore_characters.item_instance a left join acore_world.item_template b on a.itemEntry= b.entry \
 		where a.guid not in (select item from acore_characters.character_inventory where guid="..guid..") \
+		and a.guid not in (select itemguid from acore_characters.auctionhouse where itemowner="..guid..")\
 		and a.guid not in (select item_guid from acore_characters.mail_items where receiver="..guid..")  \
 		and a.owner_guid="..guid.." and b.Quality>="..Quality)
 	if result then
